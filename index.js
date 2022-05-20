@@ -1,7 +1,6 @@
 // packages
 const express = require('express')
 const ejsLayouts = require('express-ejs-layouts')
-const res = require('express/lib/response')
 
 // app config
 const app = express()
@@ -17,19 +16,10 @@ app.get('/', (req, res) => {
 	res.render('index.ejs')
 })
 
-// GET /foods -- favorite foods
-app.get('/foods', (req, res) => {
-	res.render('loveOrLeave.ejs', {
-		feeling: 'Love',
-		topic: 'this food',
-		items: ['mango', 'shepards pie', 'ceviche', 'crab legs', 'crawfish and shrimp fried rice', 'liver kabab', 'stuffed cabbage']
-	})
-})
-// GET /animals -- favorite animals
-
-// GET /movies -- least fav movies
-
-// GET /products -- least favorite products
+// controllers (middleware syntax)
+// app.use('url pattern to prefix all routes with', the controller file)
+app.use('/love-it', require('./controllers/love-it'))
+app.use('/leave-it', require('./controllers/leave-it'))
 
 // listen
 app.listen(PORT, console.log(`expressing on port ${PORT}`))
